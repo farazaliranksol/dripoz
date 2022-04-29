@@ -50,7 +50,9 @@ class NewCampaignController extends Controller
         //2 for paused campaign
         //3 for deleted campaign
         $this->validate($request, [
-            'keyword' => 'unique:campaigns',
+            'name' => 'required',
+            'message' => 'required',
+            'keyword' => 'required|unique:campaigns',
         ]);
 
         $data = new Campaign();
