@@ -979,7 +979,15 @@ $(document).ready(function(){
                 window.location.href = url;   
             },
             error:function(data) {   
-                toastify(data.responseJSON.errors.keyword[0],'error');
+                if(data.responseJSON.errors.keyword){
+                    toastify(data.responseJSON.errors.keyword[0],'error');
+                }
+                if(data.responseJSON.errors.name){
+                    toastify(data.responseJSON.errors.name[0],'error');
+                }
+                if(data.responseJSON.errors.message){
+                    toastify(data.responseJSON.errors.message[0],'error');
+                }
             }
         });
     });
