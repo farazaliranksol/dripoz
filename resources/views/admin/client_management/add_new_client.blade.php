@@ -94,7 +94,7 @@
                   <div class="form-group">
                     <select class="form-control" id="role" name="numberOfUsers" required>
                       @foreach($subscription as $d)
-                      <option value="{{$d->price}}">{{$d->package_name}}</option>
+                      <option value="{{$d->id}}">{{$d->package_name}}</option>
                       @endforeach
                     </select>
                   </div>

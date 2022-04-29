@@ -8,7 +8,7 @@ use App\Models\User;
 use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Mail;
 class ClientManagementController extends Controller
 {
     /**
@@ -101,11 +101,14 @@ class ClientManagementController extends Controller
                     'first_name'   => $request->firstName,
                     'last_name'   => $request->lastName,
                     'email'   => $request->email,
+                    'subscribed_package'   => $request->numberOfUsers,
                     'password'   =>  Hash::make($request->password),
                     'number'   => $request->mobileNumber,
                     'role'   => $request->role,
+                    'status'   => 'deactivated',
                 ]);
-        
+        $user_id_f=$user->id;
+        Mail::to($request->email)->send(new TestMail($user_id_f));
                 if($user){
                     $client = ClientManagement::create([
                         'user_id' => $user->id,

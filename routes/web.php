@@ -57,8 +57,8 @@ use App\Models\ClientUserPermission;
 
 
 //strip routes
-Route::get('stripe', [StripeController::class, 'stripe']);
-Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
+Route::get('paynow/{id}', [StripeController::class, 'stripe']);
+// Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
 
 
 Route::get('/', function () {
