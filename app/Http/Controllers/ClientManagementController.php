@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ClientManagement;
 use App\Models\ClientUserPermission;
 use App\Models\User;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -28,7 +29,8 @@ class ClientManagementController extends Controller
      */
     public function create()
     {
-        return view ('admin.client_management.add_new_client');
+        $data['subscription']=Subscription::get();
+        return view ('admin.client_management.add_new_client',$data);
     }
     public function edit_client_management($id){
         $data['client'] = ClientManagement::find($id);

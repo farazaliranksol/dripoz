@@ -87,9 +87,16 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <input type="number" class="form-control" id="numberOfUsers" name="numberOfUsers"
                       placeholder="No. of Users" @if(isset($client)) value="{{ $client->no_of_users ? $client->no_of_users : '' }}" @endif />
+                  </div> -->
+                  <div class="form-group">
+                    <select class="form-control" id="role" name="numberOfUsers" required>
+                      @foreach($subscription as $d)
+                      <option value="{{$d->price}}">{{$d->package_name}}</option>
+                      @endforeach
+                    </select>
                   </div>
                 </div>
               </div>
