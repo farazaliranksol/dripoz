@@ -102,7 +102,6 @@ class ClientManagementController extends Controller
                     'first_name'   => $request->firstName,
                     'last_name'   => $request->lastName,
                     'email'   => $request->email,
-                    'subscribed_package'   => $request->numberOfUsers,
                     'password'   =>  Hash::make($request->password),
                     'number'   => $request->mobileNumber,
                     'role'   => $request->role,
@@ -119,6 +118,7 @@ class ClientManagementController extends Controller
             'invoice_settings' => ['default_payment_method' => 'pm_card_visa'],
         ]
         );
+       
         //end creating customer
         $user_id_f=$res->id;
         $r=$request->numberOfUsers;
