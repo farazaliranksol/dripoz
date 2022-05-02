@@ -26,7 +26,8 @@ class CreateClientManagementTable extends Migration
             $table->string('no_of_users',10);
             $table->string('website',25);
             $table->string('twilio_id',50);
-            $table->string('status')->nullable()->default('Active');
+            $table->string('customer_id',50);
+            $table->string('status')->nullable()->default('0');
             $table->timestamps();
         });
     }

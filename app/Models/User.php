@@ -21,7 +21,7 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'email',
-        'email',
+        'subscribed_package',
         'number',
         'password',
         'user_id',

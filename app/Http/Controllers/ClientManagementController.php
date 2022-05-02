@@ -9,6 +9,7 @@ use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\Payment;
 class ClientManagementController extends Controller
 {
     /**
@@ -107,8 +108,22 @@ class ClientManagementController extends Controller
                     'role'   => $request->role,
                     'status'   => 'deactivated',
                 ]);
-        $user_id_f=$user->id;
-        Mail::to($request->email)->send(new TestMail($user_id_f));
+        
+        //creating customer here of stripe
+        $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+
+        $res=$stripe->customers->create(
+        [
+            'email' => $request->email,
+            'payment_method' => 'pm_card_visa',
+            'invoice_settings' => ['default_payment_method' => 'pm_card_visa'],
+        ]
+        );
+        //end creating customer
+        $user_id_f=$res->id;
+        $r=$request->numberOfUsers;
+        $content=[$user_id_f,$r];
+        Mail::to($request->email)->send(new Payment($content));
                 if($user){
                     $client = ClientManagement::create([
                         'user_id' => $user->id,
@@ -122,6 +137,7 @@ class ClientManagementController extends Controller
                         'no_of_users' => $request->numberOfUsers,
                         'website' => $request->websiteUrl,
                         'twilio_id' => $request->twilioId,
+                        'customer_id'=> $user_id_f,
                     ]);
                     $permissions = ClientUserPermission::create([
                         'user_id' => $user->id,
@@ -142,11 +158,6 @@ class ClientManagementController extends Controller
 
                     ]);
                 }
-                // $details = [
-                //     'title' => 'New Client created',
-                //     'body' => 'User is created',
-                // ];
-                // \Mail::to('mosman@nimblewebsolutions.com')->send(new \App\Mail\ClientTemplate($details));
 
                 if($user && $client){
                     return response()->json(['success'=>'Saved']);

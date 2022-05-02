@@ -92,7 +92,7 @@
                       placeholder="No. of Users" @if(isset($client)) value="{{ $client->no_of_users ? $client->no_of_users : '' }}" @endif />
                   </div> -->
                   <div class="form-group">
-                    <select class="form-control" id="role" name="numberOfUsers" required>
+                    <select class="form-control" id="numberOfUsers" name="numberOfUsers" required>
                       @foreach($subscription as $d)
                       <option value="{{$d->id}}">{{$d->package_name}}</option>
                       @endforeach
