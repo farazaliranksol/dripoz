@@ -20,6 +20,15 @@ class ClientManagementController extends Controller
     public function index()
     {
         $data['clients'] = ClientManagement::orderBy('id','DESC')->get();
+        $c=0;
+        foreach($data['clients'] as $d){
+            
+            $r=$d['subscribed_package'];
+         $subscribed[$c]=Subscription::where('id',$r)->value('package_name');
+         $c+=1;
+        }
+        $data['subscribed']=$subscribed;
+        // dd($data);
         return view ('admin.client_management.client_management',$data);
     }
 
@@ -105,7 +114,7 @@ class ClientManagementController extends Controller
                     'password'   =>  Hash::make($request->password),
                     'number'   => $request->mobileNumber,
                     'role'   => $request->role,
-                    'status'   => 'deactivated',
+                    'status'   => '0',
                 ]);
         
         //creating customer here of stripe
@@ -134,7 +143,7 @@ class ClientManagementController extends Controller
                         'zip_code' => $request->zipCode,
                         'state' => $request->state,
                         'phone_number' => $request->phoneNumber,
-                        'no_of_users' => $request->numberOfUsers,
+                        'subscribed_package' => $request->numberOfUsers,
                         'website' => $request->websiteUrl,
                         'twilio_id' => $request->twilioId,
                         'customer_id'=> $user_id_f,
@@ -185,7 +194,7 @@ class ClientManagementController extends Controller
                     'zip_code' => $request->zipCode,
                     'state' => $request->state,
                     'phone_number' => $request->phoneNumber,
-                    'no_of_users' => $request->numberOfUsers,
+                    'subscribed_package' => $request->numberOfUsers,
                     'website' => $request->websiteUrl,
                     'twilio_id' => $request->twilioId,
                 ]);
@@ -199,12 +208,12 @@ class ClientManagementController extends Controller
     }
     public function deactivate_client_management($id){
         $deactivateClient = ClientManagement::where('id',$id)->update([
-            'status' => 'Deactivate',
+            'status' => '0',
         ]);
         $user_id = ClientManagement::find($id);
         $user_id = $user_id->user_id;
         $deactivateUser = User::where('id',$user_id)->update([
-            'status' => 'Deactivate',
+            'status' => '0',
         ]);
         if($deactivateClient && $deactivateUser){
             return redirect()->back()->with(['success'=>'Updated']);

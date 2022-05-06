@@ -26,31 +26,36 @@
                                 <th>Company Name</th>
                                 <th>Twilio Id</th>
                                 <th>Status</th>
-                                <th>Number of Users</th>
+                                <th>Selected Package</th>
                                 <th>Action</th>
                             </tr>
                             </thead>
                             <tbody>
-                                @if($clients)
-                                @foreach ($clients as $client)
+                            @if($clients)
+                            
+                                @php 
+                                    $all=count($clients);
+                                    for($i=0;$i<$all;$i++){
+                                @endphp
+                               
                                     
                              
                             <tr class="table-">
 
                                 <td class="table-user">
-                                   {{ $client->id }}
+                                   {{ $clients[$i]->id }}
                                 </td>
                                 <td>
-                                    {{ $client->company_name }}
+                                    {{ $clients[$i]->company_name }}
                                 </td>
                                 <td>
-                                    {{ $client->twilio_id }}
+                                    {{ $clients[$i]->twilio_id }}
                                 </td>
                                 <td>
-                                    {{ $client->status }}
+                                    {{ $clients[$i]->status }}
                                 </td>
-                                <td>
-                                    {{ $client->no_of_users }}
+                                <td class="text-center">
+                                       {{$subscribed[$i]}}
                                 </td>
                                 <td>
 
@@ -59,16 +64,19 @@
                                         <i class="fa fa-ellipsis-v text-purple-f" aria-hidden="true"></i>
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" href="{{ url('edit-client-management',$client->id) }}">Edit</a>
-                                        <a class="dropdown-item" href="{{ url('user-login',$client->user_id) }}">Login As</a>
+                                        <a class="dropdown-item" href="{{ url('edit-client-management',$clients[$i]->id) }}">Edit</a>
+                                        <a class="dropdown-item" href="{{ url('user-login',$clients[$i]->user_id) }}">Login As</a>
                                         <a class="dropdown-item" href="#">Add Funds</a>
                                         <a class="dropdown-item" href="#">Manage Rates</a>
-                                        <a class="dropdown-item" href="{{ url('deactivate-client-management',$client->id) }}">Deactivate</a>
+                                        <a class="dropdown-item" href="{{ url('deactivate-client-management',$clients[$i]->id) }}">Deactivate</a>
 
                                     </div>
                                 </td>
                             </tr>
-                            @endforeach
+                           
+                            @php
+                                    }
+                            @endphp
                             @endif
                             </tbody>
                         </table>

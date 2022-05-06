@@ -41,11 +41,33 @@ class SubscriptionController extends Controller
             'total_number'   => $request->totalNumber,
             'campaigns'   => $request->campaigns,
             'users'   => $request->users,
+            'product_id'=>'not assigned'
         ]);
         if($insert) {
+            //product creation
+            $stripe = new \Stripe\StripeClient(
+                'sk_test_61cTTXgylXSKNRSwFtmGvBnj00TEoFXtnl'
+              );
+             $res=$stripe->products->create([
+                'name' => $request->packageName,
+              ]);
+             
+              //this will create plan against the product and gives product id
+            $stripe = new \Stripe\StripeClient(
+                'sk_test_61cTTXgylXSKNRSwFtmGvBnj00TEoFXtnl'
+              );
+             $response_to_plan=$stripe->plans->create([
+                'amount' => $request->price,
+                'currency' => 'usd',
+                'interval' => 'month',
+                'product' => $res->id,
+              ]);
+            //   $package_Update = Subscription::where("id", $insert->id)->update(["product_id" => $res->id]);
+            //this will contain the plan created against the package product and update that in db against the package
+            $package_Update = Subscription::where("id", $insert->id)->update(["product_id" => $response_to_plan]);
             return response()->json(['success' => 'Saved']);
-        }else {
-            return response()->json(['error' => 'Please try again!']);
+        }else{
+            return response()->json(['error' => 'Name Already Taken']);
         }
     }
 

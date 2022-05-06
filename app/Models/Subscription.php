@@ -13,6 +13,7 @@ class Subscription extends Model
         'price',
         'total_number',
         'campaigns',
-        'users'
+        'users',
+        'product_id'
     ];
 }

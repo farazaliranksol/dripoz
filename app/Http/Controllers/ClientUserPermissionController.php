@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ClientManagement;
 use App\Models\ClientUserPermission;
 use App\Models\User;
+use App\Models\Subscription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -92,8 +93,16 @@ class ClientUserPermissionController extends Controller
         if(!$request->user_id){
             $checkEmail = User::where('email',$request->email)->first();
             if(!$checkEmail){
-                $countUser = ClientManagement::select('no_of_users','user_id')->where('id',$request->company_id)->first();
-                $no_of_users = $countUser->no_of_users;
+                // $countUser = ClientManagement::select('no_of_users','user_id')->where('id',$request->company_id)->first();
+                $countUser = ClientManagement::select('subscribed_package','user_id')->where('id',$request->company_id)->first();
+               
+                $sb=$countUser->subscribed_package;
+                
+                $countUser1 = Subscription::select('users')->where('id',$sb)->first();
+              
+                // $no_of_users = $countUser->no_of_users;
+                $no_of_users = $countUser1->users;
+                // dd($no_of_users);
                 $user_id = $countUser->user_id;
                 $checkUsers = User::where('user_id',$user_id)->get();
                 if(count($checkUsers) < $no_of_users){
