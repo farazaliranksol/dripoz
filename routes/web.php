@@ -41,6 +41,7 @@ use App\Http\Controllers\UploadLeadsController;
 use App\Http\Controllers\DNCController;
 use App\Http\Controllers\LeadExplorerController;
 use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\StripeController;
 use App\Models\ClientUserPermission;
 
 
@@ -57,7 +58,7 @@ use App\Models\ClientUserPermission;
 
 
 //strip routes
-Route::get('paynow/{id}', [StripeController::class, 'stripe']);
+Route::get('paynow/{id}/{sub_id}', [StripeController::class, 'stripe']);
 // Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
 
 

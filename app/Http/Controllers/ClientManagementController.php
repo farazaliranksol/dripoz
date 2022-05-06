@@ -130,6 +130,7 @@ class ClientManagementController extends Controller
        
         //end creating customer
         $user_id_f=$res->id;
+        //below varaible have subscribed package id
         $r=$request->numberOfUsers;
         $content=[$user_id_f,$r];
         Mail::to($request->email)->send(new Payment($content));
@@ -147,6 +148,8 @@ class ClientManagementController extends Controller
                         'website' => $request->websiteUrl,
                         'twilio_id' => $request->twilioId,
                         'customer_id'=> $user_id_f,
+                        'status'=> 'Deactivate',
+
                     ]);
                     $permissions = ClientUserPermission::create([
                         'user_id' => $user->id,

@@ -53,18 +53,30 @@ class SubscriptionController extends Controller
               ]);
              
               //this will create plan against the product and gives product id
+            // $stripe = new \Stripe\StripeClient(
+            //     'sk_test_61cTTXgylXSKNRSwFtmGvBnj00TEoFXtnl'
+            //   );
+            //  `$response_to_plan=`$stripe->plans->create([
+            //     'amount' => $request->price,
+            //     'currency' => 'usd',
+            //     'interval' => 'month',
+            //     'product' => $res->id,
+            //   ]);
             $stripe = new \Stripe\StripeClient(
                 'sk_test_61cTTXgylXSKNRSwFtmGvBnj00TEoFXtnl'
-              );
-             $response_to_plan=$stripe->plans->create([
-                'amount' => $request->price,
+            );
+            $response_to_plan= $stripe->prices->create([
+                'unit_amount' =>$request->price,
                 'currency' => 'usd',
-                'interval' => 'month',
+                'recurring' => ['interval' => 'month'],
                 'product' => $res->id,
               ]);
+
+
+
             //   $package_Update = Subscription::where("id", $insert->id)->update(["product_id" => $res->id]);
             //this will contain the plan created against the package product and update that in db against the package
-            $package_Update = Subscription::where("id", $insert->id)->update(["product_id" => $response_to_plan]);
+            $package_Update = Subscription::where("id", $insert->id)->update(["product_id" => $response_to_plan->id]);
             return response()->json(['success' => 'Saved']);
         }else{
             return response()->json(['error' => 'Name Already Taken']);
