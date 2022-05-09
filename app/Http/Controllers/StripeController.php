@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\Subscription;
 use App\Models\ClientManagement;
+use App\Models\User;
+use App\Mail\payment_rejected;
 use Illuminate\Http\Request;
 
 class StripeController extends Controller
@@ -35,5 +37,9 @@ $priceId = Subscription::select('product_id')->where('id',$subscription_id)->fir
     return redirect(url('/login'));
   }
   public function payment_rejected(){
+    $mail_user=ClientManagement::select('user_id')->where('session_id',$response['session_id'])->first();
+    $user_mail=User::select('email')->where('id',$mail_user->user_id)->first();
+    $content='';
+    Mail::to($user_mail->email)->send(new payment_rejected($content));
   }
 }
