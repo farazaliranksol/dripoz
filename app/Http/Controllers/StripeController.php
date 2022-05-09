@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Subscription;
+use App\Models\ClientManagement;
 use Illuminate\Http\Request;
 
 class StripeController extends Controller
@@ -13,15 +14,26 @@ $priceId = Subscription::select('product_id')->where('id',$subscription_id)->fir
     // dd($priceId1);
     \Stripe\Stripe::setApiKey('sk_test_61cTTXgylXSKNRSwFtmGvBnj00TEoFXtnl');
     $res=$session = \Stripe\Checkout\Session::create([
-      'success_url' => 'https://example.com/success.html?session_id={CHECKOUT_SESSION_ID}',
-      'cancel_url' => 'https://example.com/canceled.html',
+      'client_reference_id'=>$user_id ,
+      'success_url' => url('payment-succeeded').'?session_id={CHECKOUT_SESSION_ID}',
+      'cancel_url' => url('payment-rejected'),
       'mode' => 'subscription',
       'line_items' => [[
         'price' => $priceId1,
-        // For metered billing, do not pass quantity
         'quantity' => 1,
       ]],
     ]);
-    dd($res);
+    // dd($res->id);
+    $update=ClientManagement::where('customer_id',$user_id)->update(['session_id'=>$res->id]);
+    return redirect($res->url);
+    // dd($res);
+  }
+  public function payment_succeeded(Request $request){
+    $response=$request->all();
+    $update=ClientManagement::where('session_id',$response['session_id'])->update(['status'=>'Active']);
+    // dd($response);
+    return redirect(url('/login'));
+  }
+  public function payment_rejected(){
   }
 }

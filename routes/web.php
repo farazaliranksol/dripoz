@@ -60,7 +60,8 @@ use App\Models\ClientUserPermission;
 //strip routes
 Route::get('paynow/{id}/{sub_id}', [StripeController::class, 'stripe']);
 // Route::post('stripe', [StripeController::class, 'stripePost'])->name('stripe.post');
-
+Route::get('payment-succeeded',[StripeController::class, 'payment_succeeded']);
+Route::get('payment-rejected',[StripeController::class, 'payment_rejected']);
 
 Route::get('/', function () {
     if(auth()->user()){
