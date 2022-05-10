@@ -5,8 +5,9 @@ namespace App\Imports;
 use App\Models\Lead;
 use App\Models\Campaign;
 use Maatwebsite\Excel\Concerns\ToModel;
+use Maatwebsite\Excel\Concerns\WithStartRow;
 
-class LeadsImport implements ToModel
+class LeadsImport implements ToModel, WithStartRow
 {
     private $data;
 
@@ -40,5 +41,9 @@ class LeadsImport implements ToModel
             'zip_code' => $record[11]
 
         ]);
+    }
+    public function startRow(): int
+    {
+        return 2;
     }
 }
