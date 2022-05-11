@@ -11,7 +11,7 @@ class Campaign extends Model
     protected $fillable =[
       'name','user_id','keyword','message','long_transfer','close_lead','close_duration','revenue','long_transfer_check','close_leads_check','report_rule',
         'ai_rules','voice_scheduling_check','leads_per_day','number_list','local_match_Check','delivery_type','cps','sms_per_min',
-        'concurrent_transfer','max_CSP','record_call_check','fallback_transfer_check','fallback_timeout','fallback_number','scheduling_check','rescheduling_check','max_scheduling_month','in_outbound_check','status','message','keyword'
+        'concurrent_transfer','max_CSP','record_call_check','fallback_transfer_check','fallback_timeout','fallback_number','scheduling_check','rescheduling_check','max_scheduling_month','in_outbound_check','status','message','keyword','date_started'
     ];
     public function campaignHours()
     {

@@ -39,7 +39,7 @@ class StartCompaign implements ShouldQueue
         $message =  $compaign->message; 
         $number_list=PhoneNumber::where('phone_number_list_id',$compaign->number_list)->first();
         $lead=Lead::where('campaign_id',$this->compaign_id)->get();
-        if($lead>0){
+        if(count($lead)>0){
         foreach($lead as $k => $r){
             $check=Campaign::where('id',$this->compaign_id)->first();
             if($check->name!=2){

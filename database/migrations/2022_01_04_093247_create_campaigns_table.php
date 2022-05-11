@@ -33,6 +33,7 @@ class CreateCampaignsTable extends Migration
             $table->string('cps');
             $table->string('keyword');
             $table->string('message');
+            $table->string('date_started')->nullable();
             $table->integer('sms_per_min');
             $table->integer('concurrent_transfer');
             $table->float('max_CSP');

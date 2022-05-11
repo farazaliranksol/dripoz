@@ -312,6 +312,7 @@ class ConsoleController extends Controller
         // $update = Campaign::where('id',$request->id)->update([
         //     'status' => 'Pause',
         // ]);
+        $today = date("Y-m-d");
          $old=Campaign::where('id',$request->id)->first();
         if($old['status']==2){
             $s='Started';
@@ -319,6 +320,7 @@ class ConsoleController extends Controller
             $this->dispatch($dis);
             $update = Campaign::where('id',$request->id)->update([
                 'status' => 1,
+                'date_started' => $today
             ]);
         }else if($old['status']==1){
             $s='Paused';
