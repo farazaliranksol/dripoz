@@ -137,7 +137,7 @@
 
                 <div class="card-header border-0 pb-0">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-md-4 col-8">
                             <h3 class="mb-0 drip_head">Drip Campaigns</h3>
                         </div>
                     </div>

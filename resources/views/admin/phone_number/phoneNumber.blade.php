@@ -8,7 +8,7 @@
     <div class="container-fluid">
         <div class="header-body">
             <div class="row align-items-center pt-4">
-                <div class="col-lg-5 col-4">
+                <div class="col-lg-5 col-sm-6 col-8 col-md-4">
                     <h2 class="h2 text-white d-inline-block mb-0">Phone Number</h2>
                 </div>
             </div>
@@ -33,7 +33,7 @@
                                 @endif
                             </select>
                         </div>
-                        <div class="col-md-5 text-left">
+                        <div class="col-md-5 text-left mt-md-0 mt-4 ">
                             <button type="button" class="btn btn-sm btn-success btn-round btn-icon" data-toggle="modal"
                                 data-target="#addPhoneNumberList">
                                 <span class="btn-inner--icon"><i class="fas fa-plus"></i></span>
@@ -135,10 +135,10 @@
                     </div>
                 </div>
             </div>
-            <div class="row align-items-Center py-4 mt--3">
+            <div class="row align-items-Center pb-4">
                 <div class="col-lg-7 col-8 text-left">
-                    <div class="col-12 text-left">
-                        <button type="button" class="btn btn-outline-primary btn-sm"
+                    <div class="col-12 text-left pl-0">
+                        <button type="button" class="btn btn-outline-primary btn-sm mt-2"
                             style="background: white; color: royalblue ;height: 35px; width: 130px; font-size: 13px;"
                             data-toggle="modal" data-target="#buyNumberModal">
                             <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
@@ -334,7 +334,7 @@
 
                         <!-------------Available Numbers modal starts------------------>
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                        <button type="button" class="btn btn-primary mt-2" data-toggle="modal"
                             data-target="#availableTwilioNumbersModal" hidden id="availableTwilioNumbersModalBtn">
                         </button>
 
@@ -388,7 +388,7 @@
                             </div>
                         </div>
                         <!-------------Available Numbers modal ends------------------>
-                        <button type="button" class="btn btn-outline-primary btn-sm"
+                        <button type="button" class="btn btn-outline-primary btn-sm mt-2"
                             style="background: white; color: royalblue ;height: 35px; width: 142px; font-size: 13px;"
                             id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="btn-inner--icon"><i class="fas fa-align-justify"></i></span>
@@ -408,7 +408,7 @@
                                 onclick="changeNumberStatus('cancel')">Cancel
                                 Numbers</a>
                         </div>
-                        <button type="button" class="btn btn-outline-primary btn-sm"
+                        <button type="button" class="btn btn-outline-primary btn-sm mt-2"
                             style="background: white; color: royalblue ;height: 35px; width: 175px; font-size: 13px;"
                             data-toggle="modal" data-target="#auto_rebuy">
                             <span class="btn-inner--icon"><i class="fas fa-phone"></i></span>
