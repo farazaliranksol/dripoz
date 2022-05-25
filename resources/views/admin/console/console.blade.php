@@ -111,7 +111,7 @@
     </div>
 </div>
 <!-- Page content -->
-<div class="container-fluid mt--6">
+<div class="container-fluid mt-6">
     <div class="row">
         <div class="col">
             <!--* Card header *-->
@@ -122,7 +122,7 @@
 
                 <div class="card-header border-0 pb-0">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-md-4 col-8">
                             <h3 class="mb-0 drip_head">Drip Campaigns</h3>
                         </div>
                     </div>
@@ -177,19 +177,19 @@
 </div>
 <div class="container-fluid">
     <div class="row">
-        <div class="col mt-3 text-center">
-            <button type="button" class="btn btn-primary btn-round btn-icon">
+        <div class="col mt-1 text-center">
+            <button type="button" class="btn btn-primary btn-round btn-icon mt-2">
                 <a href="{{route('newCampaign.index')}}" style="color: white;">
                     <!-- <span class="btn-inner--icon"><i class="fas fa-plus"></i></span> -->
                     <span class="btn-inner--text">Add New Campaign</span>
                 </a>
             </button>
-            <button type="button" class="btn btn-primary btn-round btn-icon" data-toggle="modal"
+            <button type="button" class="btn btn-primary btn-round btn-icon mt-2" data-toggle="modal"
                 data-target="#modal-form" onclick="updateAllCampaignsStatus('pause')">
                 <!-- <span class="btn-inner--icon"><i class="fas fa-pause"></i></span> -->
                 <span class="btn-inner--text">Pause All Campaigns</span>
             </button>
-            <button type="button" class="btn btn-primary btn-round btn-icon" data-toggle="modal"
+            <button type="button" class="btn btn-primary btn-round btn-icon mt-2" data-toggle="modal"
                 data-target="#modal-form" onclick="updateAllCampaignsStatus('unpause')">
                 <!-- <span class="btn-inner--icon"><i class="fas fa-play"></i></span> -->
                 <span class="btn-inner--text">Unpause All Campaign</span>

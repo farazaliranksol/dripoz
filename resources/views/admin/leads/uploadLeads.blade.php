@@ -264,7 +264,7 @@
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" name="file" id="customFile" accept="text/csv" lang="en">
+                                    <input type="file" class="custom-file-input" name="file" id="customFile" accept="text/csv" lang="en" required>
                                     <label class="custom-file-label" for="customFile">Select file</label>
                                 </div>
                             </div>
