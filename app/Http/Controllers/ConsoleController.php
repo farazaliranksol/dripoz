@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Campaign;
 use App\Models\Lead;
+use App\Models\CampaignHistory;
+use App\Models\CampaignExecutionHistory;
 use DataTables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use SebastianBergmann\Environment\Console;
 use App\Jobs\StartCompaign;
+use App\Models\DayEvent;
+use App\Models\Event;
+use App\Models\PhoneNumber;
 class ConsoleController extends Controller
 {
     /**
@@ -18,6 +23,79 @@ class ConsoleController extends Controller
      */
     public function index()
     {
+        $campaign_id=22;
+        $getevent_to_be_executed=CampaignHistory::where('campaign_id',$campaign_id)->first();
+        $current_date=date("Y-m-d");
+        $d1 = date_create($current_date);
+        $created_date=date_create($getevent_to_be_executed->changed_date);
+        if($getevent_to_be_executed){
+        $diff=date_diff($created_date,$d1);
+        $d=$diff->format("%R%a");
+        }
+        //this is the date of campaign on which it was satrted first time
+        //this variable contain day difference between campaign started and current date
+        $date_difference=(int)$d;
+
+        $campaign_months=Campaign::where('id',$campaign_id)->first();
+        $months=$campaign_months->max_scheduling_month;
+        $total_days_for_campaign=(int)($months*30);
+        if($total_days_for_campaign>$d){
+            //this condition tests whether the campaign is executing in alloted months or not if not then don't allow campaign to execute
+            $message =  $campaign_months->message; 
+            $number_list=PhoneNumber::where('phone_number_list_id',$campaign_months->number_list)->first();
+            $lead=Lead::where('campaign_id',$campaign_id)->get();
+            if(count($lead)>0){
+                foreach($lead as $k => $r){
+                    $check=Campaign::where('id',$campaign_id)->first();
+                        if($check->status==1){
+                            // dd($date_difference);
+                            $event_type="DaySmsEvent".$date_difference;
+                            // dd($event_type);
+
+                            $campaign_events=Event::where([['campaign_id',$campaign_id],['executed',0],['type',$event_type]])->get();
+                            
+                           //below is the line to get child table events
+                           if($campaign_events){
+                               //these are the events to be performed on present day of campaign execution
+                            foreach($campaign_events as $c){
+                                //foreach to iterate multiple events if one day have more than one event
+                                foreach($c->dayEvents as $d){
+                                   
+                                    dd(strtotime("now"));
+                                    dd($d->meta_key,$d->meta_value);
+                                }
+                            }
+                            dd($campaign_events);
+                           }
+                            //end below
+                            //     $curl = curl_init();
+                            //     curl_setopt_array($curl, array(
+                            //     CURLOPT_URL => 'https://api.twilio.com/2010-04-01/Accounts/ACb13670eb58cd0ce6267bf8e3174dc169/Messages.json',
+                            //     CURLOPT_RETURNTRANSFER => true,
+                            //     CURLOPT_ENCODING => '',
+                            //     CURLOPT_MAXREDIRS => 10,
+                            //     CURLOPT_TIMEOUT => 0,
+                            //     CURLOPT_FOLLOWLOCATION => true,
+                            //     CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                            //     CURLOPT_CUSTOMREQUEST => 'POST',
+                            //     CURLOPT_POSTFIELDS => array('Body' => $message,'From' => $number_list->phone_number,'To' => $r->phone_number),
+                            //     CURLOPT_HTTPHEADER => array(
+                            //         'Authorization: Basic QUNiMTM2NzBlYjU4Y2QwY2U2MjY3YmY4ZTMxNzRkYzE2OToxMWE3ZWQ5MTIwNWNiNTk5MDgxZDM3NTk2NjU3MmY2NQ=='
+                            //     ),
+                            //     ));  
+                            // $response = curl_exec($curl);
+    
+                            // curl_close($curl);
+                        }else{
+                            //if compaign is paused then get out of loop
+                            break;
+                        }
+                }//execute all leads one by one for each
+            }//end if  checking leads against campaign
+        }else{
+            //this notify that campaign exceeded alloted months
+           
+        }
         return view('admin.console.console');
     }
 
@@ -316,24 +394,36 @@ class ConsoleController extends Controller
          $old=Campaign::where('id',$request->id)->first();
         if($old['status']==2){
             $s='Started';
-            $dis = new StartCompaign($request->id);
-            $this->dispatch($dis);
+            // $dis = new StartCompaign($request->id);
+            // $this->dispatch($dis);
             $update = Campaign::where('id',$request->id)->update([
                 'status' => 1,
                 'date_started' => $today
             ]);
+            $history=new CampaignHistory;
+            $history->campaign_id=$request->id;
+            $history->campaign_status=1;
+            $history->save();
         }else if($old['status']==1){
             $s='Paused';
         $update = Campaign::where('id',$request->id)->update([
             'status' => 2,
         ]);
+        $history=new CampaignHistory;
+            $history->campaign_id=$request->id;
+            $history->campaign_status=2;
+            $history->save();
              }else{
                 $s='Started';
-                $dis = new StartCompaign($request->id);
-                $this->dispatch($dis);
+                // $dis = new StartCompaign($request->id);
+                // $this->dispatch($dis);
                 $update = Campaign::where('id',$request->id)->update([
                     'status' => 1,
                 ]);
+                $history=new CampaignHistory;
+            $history->campaign_id=$request->id;
+            $history->campaign_status=1;
+            $history->save();
              }
         if($update){
             return response()->json(['success' => $s]);
@@ -344,6 +434,10 @@ class ConsoleController extends Controller
         public function deleteCompaign(Request $request){
         $id=$request->id;
         $delete = Campaign::where('id',$id)->update(['status'=>3]);
+        $history=new CampaignHistory;
+            $history->campaign_id=$request->id;
+            $history->campaign_status=3;
+            $history->save();
         if($delete){
             return response()->json(['success' => 'Campaign Deleted!']);
         }else{

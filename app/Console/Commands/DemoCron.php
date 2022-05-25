@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-
+use App\Models\Campaign;
+use App\Models\CampaignHistory;
+use App\Models\CampaignExecutionHistory;
 class DemoCron extends Command
 {
     /**
@@ -37,6 +39,12 @@ class DemoCron extends Command
      */
     public function handle()
     {
-        return 0;
+        // return 0;
+        //write code regarding crons job
+        $all_active_campaigns=Campaign::where('status',1)->get();
+        foreach($all_active_campaigns as $d){
+            $dis = new StartCompaign($request->id);
+            $this->dispatch($dis);
+        }
     }
 }

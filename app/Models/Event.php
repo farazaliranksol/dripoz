@@ -9,7 +9,8 @@ class Event extends Model
 {
     use HasFactory;
     protected $fillable=[
-        'campaign_id' , 'type'
+        'campaign_id' , 'type',
+        'executed'
     ];
     public function inboundOpenHours()
     {
