@@ -133,7 +133,8 @@ class ClientManagementController extends Controller
         //below varaible have subscribed package id
         $r=$request->numberOfUsers;
         $content=[$user_id_f,$r];
-        Mail::to($request->email)->send(new Payment($content));
+        $re=Mail::to($request->email)->send(new Payment($content));
+       dd($re);
                 if($user){
                     $client = ClientManagement::create([
                         'user_id' => $user->id,

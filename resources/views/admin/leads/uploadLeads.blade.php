@@ -223,8 +223,7 @@
                                 <label>
                                     Campaign*
                                 </label><br>
-                                <select id="camp_select" class="select form-control" name="camp_select" style="width: 70%">
-                                    <option value=""> ------------ </option>
+                                <select id="camp_select" class="select form-control" name="camp_select" style="width: 70%" required>
                                     @foreach($camp as $c)
                                     <option value={{$c->id}}>{{$c->name}}</option>
                                     @endforeach

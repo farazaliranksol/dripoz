@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use App\Models\Campaign;
 use App\Models\CampaignHistory;
 use App\Models\CampaignExecutionHistory;
+use App\Jobs\StartCompaign;
 class DemoCron extends Command
 {
     /**
@@ -43,7 +44,7 @@ class DemoCron extends Command
         //write code regarding crons job
         $all_active_campaigns=Campaign::where('status',1)->get();
         foreach($all_active_campaigns as $d){
-            $dis = new StartCompaign($request->id);
+            $dis = new StartCompaign($d->id);
             $this->dispatch($dis);
         }
     }
