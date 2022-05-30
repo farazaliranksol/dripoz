@@ -31,7 +31,7 @@
                         <div class="form-group row">
                             <label class="col-md-2 col-form-label form-control-label" >Name*</label><br>
                             <div class="col-md-6">
-                                <input class="form-control" type="text" name="name" id="name" required>
+                                <input class="form-control" type="text" name="name" id="name" required placeholder="Enter Campaign Name">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -434,7 +434,7 @@
     <div class="container-fluid mt-3" >
         <div class="row">
             <div class="col">
-                <div class="card">
+                <div class="card"> 
                     <!-- Card header -->
                     <div class="card-header" >
                         <h3>
@@ -445,22 +445,22 @@
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label form-control-label">Campaign Keyword*</label><br>
                             <div class="col-md-6">
-                                <input class="form-control" type="text" name="keyword" id="keyword" required>
+                                <input class="form-control" type="text" name="keyword" id="keyword" placeholder="Enter Campaign Keyword" required>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-md-3 col-form-label form-control-label">Message Content*</label>
                             <div class="col-md-6">
-                                <textarea class="form-control" maxlength="250" rows="4" name="message" required></textarea> 
-                            </div>  
+                                <textarea class="form-control" maxlength="250" rows="4" name="message" placeholder="First Message Content" required ></textarea> 
+                            </div>   
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    {{--Campaign hours--}}
-<div class="container-fluid mt-3" id="camp">
+    {{--Campaign hours--}} 
+<div class="container-fluid mt-3" id="camp"> 
         <div class="row">
             <div class="col">
                 <div class="card">
