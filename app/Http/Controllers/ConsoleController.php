@@ -23,7 +23,6 @@ class ConsoleController extends Controller
      */
     public function index()
     { 
-
         return view('admin.console.console');
     }
 

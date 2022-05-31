@@ -45,7 +45,7 @@ class DemoCron extends Command
         $all_active_campaigns=Campaign::where('status',1)->get();
         foreach($all_active_campaigns as $d){
             $dis = new StartCompaign($d->id);
-            $this->dispatch($dis);
+            dispatch($dis);
         }
     }
 }
